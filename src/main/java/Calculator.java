@@ -1,30 +1,54 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class Calculator {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("첫 번째 입력 값: ");
-        int first = scanner.nextInt();
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("숫자 입력: ");
+        int first = Integer.parseInt(bufferedReader.readLine());
         System.out.println(first);
 
-        System.out.print("두 번째 입력 값: ");
-        int second = scanner.nextInt();
-        System.out.println(second);
+        int result = first;
 
-        System.out.print("사칙연산 기호를 입력: ");
-        String exp = scanner.next();
-        System.out.println(exp);
+        while (true) {
 
-        if ("+".equals(exp)) {
-            System.out.println("덧셈: " + (first + second));
-        } else if ("-".equals(exp)) {
-            System.out.println("뺄셈: " + (first - second));
-        } else if ("*".equals(exp)) {
-            System.out.println("곱셈: " + (first * second));
-        } else if ("/".equals(exp)) {
-            System.out.println("나눗셈: " + (first / second));
-        } else {
-            System.out.println("wrong expression");
+            System.out.print("사칙연산 기호를 입력: ");
+            String exp = bufferedReader.readLine();
+            System.out.println(exp);
+
+            if (Objects.equals(exp, "quit")) {
+                System.out.println("최종 결과 값: " + result);
+                break;
+            }
+
+            System.out.print("숫자 입력: ");
+            int second = Integer.parseInt(bufferedReader.readLine());
+            System.out.println(second);
+
+            switch (exp) {
+                case "+":
+                    result += second;
+                    System.out.println("덧셈 = " + result);
+                    break;
+                case "-":
+                    result -= second;
+                    System.out.println("뺄셈 = " + result);
+                    break;
+                case "*":
+                    result *= second;
+                    System.out.println("곱셈 = " + result);
+                    break;
+                case "/":
+                    result /= second;
+                    System.out.println("나눗셈 = " + result);
+                    break;
+            }
+
         }
+
     }
 }
