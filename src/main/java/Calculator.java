@@ -5,50 +5,54 @@ import java.util.Objects;
 
 public class Calculator {
     public static void main(String[] args) throws IOException {
-
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.print("숫자 입력: ");
-        int first = Integer.parseInt(bufferedReader.readLine());
-        System.out.println(first);
-
-        int result = first;
+        int result = getValue(bufferedReader);
 
         while (true) {
-
-            System.out.print("사칙연산 기호를 입력: ");
-            String exp = bufferedReader.readLine();
-            System.out.println(exp);
-
-            if (Objects.equals(exp, "quit")) {
-                System.out.println("최종 결과 값: " + result);
+            String operator = getOperator(bufferedReader);
+            if (Objects.equals(operator, "quit")) {
+                printResult(result);
                 break;
             }
-
-            System.out.print("숫자 입력: ");
-            int second = Integer.parseInt(bufferedReader.readLine());
-            System.out.println(second);
-
-            switch (exp) {
-                case "+":
-                    result += second;
-                    System.out.println("덧셈 = " + result);
-                    break;
-                case "-":
-                    result -= second;
-                    System.out.println("뺄셈 = " + result);
-                    break;
-                case "*":
-                    result *= second;
-                    System.out.println("곱셈 = " + result);
-                    break;
-                case "/":
-                    result /= second;
-                    System.out.println("나눗셈 = " + result);
-                    break;
-            }
-
+            int value = getValue(bufferedReader);
+            result = getResult(operator, result, value);
         }
-
     }
+
+    private static int getResult(String operator, int result, int value) {
+        switch (operator) {
+            case "+":
+                result += value;
+                System.out.println("덧셈 = " + result);
+                break;
+            case "-":
+                result -= value;
+                System.out.println("뺄셈 = " + result);
+                break;
+            case "*":
+                result *= value;
+                System.out.println("곱셈 = " + result);
+                break;
+            case "/":
+                result /= value;
+                System.out.println("나눗셈 = " + result);
+                break;
+        }
+        return result;
+    }
+
+    private static int getValue(BufferedReader bufferedReader) throws IOException {
+        System.out.print("숫자를 입력하세요: ");
+        return Integer.parseInt(bufferedReader.readLine());
+    }
+
+    private static String getOperator(BufferedReader bufferedReader) throws IOException {
+        System.out.print("사칙연산자를 입력하거나, quit을 입력하세요: ");
+        return bufferedReader.readLine();
+    }
+
+    private static void printResult(int result) {
+        System.out.println("최종 결과 값: " + result);
+    }
+
 }
